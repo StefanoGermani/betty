@@ -54,6 +54,11 @@
         Calcola
       </button>
     </form>
+    <div class="container" style="margin-top: 30px">
+      <div class="row text-center">
+        <span class="text-center" id="result"></span>
+      </div>
+    </div>
   </main>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
@@ -73,6 +78,8 @@
         $('#btnCalcola').removeClass('btn-success');
         $('#btnCalcola').removeClass('btn-danger');
         $('#btnCalcola').addClass('btn-primary');
+
+        $('#result').text('');        
       });
 
       $('#btnCalcola').click(function (event) {
@@ -98,6 +105,7 @@
 
           $('#btnCalcola').removeClass('btn-primary');
           $('#btnCalcola').addClass('btn-success');
+          $('#result').text(`Guadagno: ${guadagno}; percentuale: ${Math.floor(percGuadagno)}%` );
         }
         else {
           $('#btnCalcola').removeClass('btn-primary');
