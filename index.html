@@ -101,11 +101,11 @@
 
         if ((puntata1 + puntataX + puntata2) < quotaMinore) {
           var guadagno = (quotaMinore - (puntata1 + puntataX + puntata2));
-          var percGuadagno = guadagno * 100 / quotaMinore;
+          var percGuadagno = guadagno * 100 / (puntata1 + puntataX + puntata2);
 
           $('#btnCalcola').removeClass('btn-primary');
           $('#btnCalcola').addClass('btn-success');
-          $('#result').text(`Guadagno: ${guadagno}; percentuale: ${Math.floor(percGuadagno)}%` );
+          $('#result').text(`Guadagno: ${Math.round(guadagno)}; percentuale: ${Math.floor(percGuadagno)}%` );
         }
         else {
           $('#btnCalcola').removeClass('btn-primary');
