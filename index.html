@@ -20,19 +20,39 @@
   </header>
   <main class="container">
     <form>
-      <div class="form-group">
-        <label for="txt1">Quota 1</label>
-        <input type="number" class="form-control" id="txt1" placeholder="0.00">
+      <div class="row">
+        <div class="form-group col-xs-6">
+          <label for="txt1">Quota 1</label>
+          <input type="number" class="form-control quota" id="txt1" placeholder="0.00">
+        </div>
+        <div class="form-group col-xs-6">
+          <label for="txtPuntata1">Puntata 1</label>
+          <input type="number" class="form-control" id="txtPuntata1" placeholder="0.00" disabled>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="txtX">Quota X</label>
-        <input type="number" class="form-control" id="txtX" placeholder="0.00">
+      <div class="row">
+        <div class="form-group col-xs-6">
+          <label for="txtX">Quota X</label>
+          <input type="number" class="form-control quota" id="txtX" placeholder="0.00">
+        </div>
+        <div class="form-group col-xs-6">
+          <label for="txtPuntataX">Puntata X</label>
+          <input type="number" class="form-control" id="txtPuntataX" placeholder="0.00" disabled>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="txt2">Quota 2</label>
-        <input type="number" class="form-control" id="txt2" placeholder="0.00">
+      <div class="row">
+        <div class="form-group col-xs-6">
+          <label for="txt2">Quota 2</label>
+          <input type="number" class="form-control quota" id="txt2" placeholder="0.00">
+        </div>
+        <div class="form-group col-xs-6">
+          <label for="txtPuntata2">Puntata 2</label>
+          <input type="number" class="form-control" id="txtPuntata2" placeholder="0.00" disabled>
+        </div>
       </div>
-      <button id="btnCalcola" type="submit" class="btn btn-lg btn-primary center-block">Calcola</button>
+      <button id="btnCalcola" type="submit" style="width:200px" class="btn btn-lg btn-primary center-block">
+        Calcola
+      </button>
     </form>
   </main>
 
@@ -45,6 +65,16 @@
         return Math.round(quota / quotaMinore * 100) / 100
       }
 
+      $('.quota').on('input', function(){
+        $('#txtPuntata1').val('');
+        $('#txtPuntataX').val('');
+        $('#txtPuntata2').val('');
+
+        $('#btnCalcola').removeClass('btn-success');
+        $('#btnCalcola').removeClass('btn-danger');
+        $('#btnCalcola').addClass('btn-primary');
+      });
+
       $('#btnCalcola').click(function (event) {
         event.preventDefault();
 
@@ -54,9 +84,25 @@
 
         var quotaMinore = Math.min(quota1, quotaX, quota2);
 
-        var puntata1 = CalcolaPuntata(quota1, quotaMinore);
-        var puntataX = CalcolaPuntata(quotaX, quotaMinore);
-        var puntata2 = CalcolaPuntata(quota2, quotaMinore);
+        var puntata1 = calcolaPuntata(quota1, quotaMinore);
+        var puntataX = calcolaPuntata(quotaX, quotaMinore);
+        var puntata2 = calcolaPuntata(quota2, quotaMinore);
+
+        $('#txtPuntata1').val(puntata1);
+        $('#txtPuntataX').val(puntataX);
+        $('#txtPuntata2').val(puntata2);
+
+        if ((puntata1 + puntataX + puntata2) < quotaMinore) {
+          var guadagno = (quotaMinore - (puntata1 + puntataX + puntata2));
+          var percGuadagno = guadagno * 100 / quotaMinore;
+
+          $('#btnCalcola').removeClass('btn-primary');
+          $('#btnCalcola').addClass('btn-success');
+        }
+        else {
+          $('#btnCalcola').removeClass('btn-primary');
+          $('#btnCalcola').addClass('btn-danger');
+        }
       });
     });
   </script>
