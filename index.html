@@ -113,9 +113,9 @@
         console.log(`somma puntate: ${puntata1 + puntataX + puntata2}`);
         console.log(`margine: ${margine}`)
         console.log(`quota minore: ${quotaMinore}`);
-        console.log(`quota con margine: ${quotaMinore + (quotaMinore * margine)}`);
+        console.log(`quota con margine: ${quotaMinore + (quotaMinore * margine / 100)}`);
 
-        if ((puntata1 + puntataX + puntata2) < (quotaMinore + (quotaMinore * margine))) {
+        if ((puntata1 + puntataX + puntata2) < (quotaMinore + (quotaMinore * margine / 100))) {
           var guadagno = (quotaMinore - (puntata1 + puntataX + puntata2));
           var percGuadagno = guadagno * 100 / (puntata1 + puntataX + puntata2);
 
