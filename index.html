@@ -50,6 +50,12 @@
           <input type="number" class="form-control" id="txtPuntata2" placeholder="0.00" disabled>
         </div>
       </div>
+      <div class="row">
+        <div class="form-group col-xs-12">
+          <label for="txtMargine">Margine in percentuale</label>
+          <input type="number" class="form-control quota" id="txtMargine" placeholder="0.00">
+        </div>
+      </div>
       <button id="btnCalcola" type="submit" style="width:200px" class="btn btn-lg btn-primary center-block">
         Calcola
       </button>
@@ -70,7 +76,7 @@
         return Math.round(quotaMinore / quota * 100) / 100
       }
 
-      $('.quota').on('input', function(){
+      $('.quota').on('input', function () {
         $('#txtPuntata1').val('');
         $('#txtPuntataX').val('');
         $('#txtPuntata2').val('');
@@ -79,7 +85,7 @@
         $('#btnCalcola').removeClass('btn-danger');
         $('#btnCalcola').addClass('btn-primary');
 
-        $('#result').text('');        
+        $('#result').text('');
       });
 
       $('#btnCalcola').click(function (event) {
@@ -88,6 +94,11 @@
         var quota1 = parseFloat($('#txt1').val());
         var quotaX = parseFloat($('#txtX').val());
         var quota2 = parseFloat($('#txt2').val());
+        var margine = parseFloat($('#txtMargine').val());
+
+        if (isNaN(margine)) {
+          margine = 0;
+        }
 
         var quotaMinore = Math.min(quota1, quotaX, quota2);
 
@@ -99,17 +110,22 @@
         $('#txtPuntataX').val(puntataX);
         $('#txtPuntata2').val(puntata2);
 
-        if ((puntata1 + puntataX + puntata2) < quotaMinore) {
+        console.log(`somma puntate: ${puntata1 + puntataX + puntata2}`);
+        console.log(`margine: ${margine}`)
+        console.log(`quota minore: ${quotaMinore}`);
+        console.log(`quota con margine: ${quotaMinore + (quotaMinore * margine)}`);
+
+        if ((puntata1 + puntataX + puntata2) < (quotaMinore + (quotaMinore * margine))) {
           var guadagno = (quotaMinore - (puntata1 + puntataX + puntata2));
           var percGuadagno = guadagno * 100 / (puntata1 + puntataX + puntata2);
 
           $('#btnCalcola').removeClass('btn-primary');
           $('#btnCalcola').addClass('btn-success');
-          $('#result').text(`Guadagno: ${Math.round(guadagno)}; percentuale: ${Math.floor(percGuadagno)}%` );
-        }
-        else {
+          $('#result').text(`Guadagno: ${Math.round(guadagno* 100) / 100}; percentuale: ${Math.floor(percGuadagno)}%`);
+        } else {
           $('#btnCalcola').removeClass('btn-primary');
           $('#btnCalcola').addClass('btn-danger');
+          $('#result').text('');          
         }
       });
     });
