@@ -77,6 +77,10 @@
     $(document).ready(function () {
 
       var calcolaPuntata = function (quota, quotaMinore) {
+        if(quota === 0){
+          return 0;
+        }
+
         return Math.round(quotaMinore / quota * 100) / 100
       }
 
@@ -98,17 +102,38 @@
         var quota1 = parseFloat($('#txt1').val());
         var quotaX = parseFloat($('#txtX').val());
         var quota2 = parseFloat($('#txt2').val());
+
+        if(isNaN(quota2)) {
+          quota2 = 0;
+        }
+
+        console.log(`quota1: ${quota1}`);
+        console.log(`quotaX: ${quotaX}`);
+        console.log(`quota2: ${quota2}`);
+
         var margine = parseFloat($('#txtMargine').val());
 
         if (isNaN(margine)) {
           margine = 0;
         }
 
-        var quotaMinore = Math.min(quota1, quotaX, quota2);
+        var quote = [quota1, quotaX, quota2].reduce((previous, current) => {
+          if(current > 0) {
+              previous.push(current);
+          }
+          return previous;
+        }, []);
+        console.log(quote);
+        var quotaMinore = Math.min(...quote);
+        console.log(`quota minore: ${quotaMinore}`);
 
         var puntata1 = calcolaPuntata(quota1, quotaMinore);
         var puntataX = calcolaPuntata(quotaX, quotaMinore);
         var puntata2 = calcolaPuntata(quota2, quotaMinore);
+
+        console.log(`puntata1: ${puntata1}`);
+        console.log(`puntataX: ${puntataX}`);
+        console.log(`puntata2: ${puntata2}`);
 
         $('#txtPuntata1').val(puntata1);
         $('#txtPuntataX').val(puntataX);
@@ -116,7 +141,6 @@
 
         console.log(`somma puntate: ${puntata1 + puntataX + puntata2}`);
         console.log(`margine: ${margine}`)
-        console.log(`quota minore: ${quotaMinore}`);
         console.log(`quota con margine: ${quotaMinore + (quotaMinore * margine / 100)}`);
 
         if ((puntata1 + puntataX + puntata2) <= (quotaMinore + (quotaMinore * margine / 100))) {
