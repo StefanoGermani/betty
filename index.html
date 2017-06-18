@@ -139,11 +139,12 @@
         $('#txtPuntataX').val(puntataX);
         $('#txtPuntata2').val(puntata2);
 
-        console.log(`somma puntate: ${puntata1 + puntataX + puntata2}`);
+        const sommaPuntate = puntata1 + puntataX + puntata2;
+        console.log(`somma puntate: ${sommaPuntate}`);
         console.log(`margine: ${margine}`)
         console.log(`quota con margine: ${quotaMinore + (quotaMinore * margine / 100)}`);
 
-        if ((puntata1 + puntataX + puntata2) <= (quotaMinore + (quotaMinore * margine / 100))) {
+        if ((sommaPuntate) <= (quotaMinore + (quotaMinore * margine / 100))) {
           $('#btnCalcola').removeClass('btn-primary');
           $('#btnCalcola').addClass('btn-success');
         } else {
@@ -151,9 +152,9 @@
           $('#btnCalcola').addClass('btn-danger');
         }
         
-        var guadagno = (quotaMinore - (puntata1 + puntataX + puntata2));
+        var guadagno = (quotaMinore - (sommaPuntate));
         var percGuadagno = guadagno * 100 / (puntata1 + puntataX + puntata2);
-        $('#result').text(`Guadagno: ${Math.round(guadagno* 100) / 100}; percentuale: ${Math.floor(percGuadagno)}%`);
+        $('#result').text(`Somma puntate: ${sommaPuntate}; Guadagno: ${Math.round(guadagno* 100) / 100}; Percentuale guadagno: ${Math.floor(percGuadagno)}%`);
       });
     });
   </script>
