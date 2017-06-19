@@ -81,7 +81,11 @@
           return 0;
         }
 
-        return Math.round(quotaMinore / quota * 100) / 100
+        return formatMoney(quotaMinore / quota);
+      }
+
+      var formatMoney = function (number) {
+        return Math.round(number * 100) / 100;
       }
 
       $('.quota').on('input', function () {
@@ -154,7 +158,7 @@
         
         var guadagno = (quotaMinore - (sommaPuntate));
         var percGuadagno = guadagno * 100 / (puntata1 + puntataX + puntata2);
-        $('#result').text(`Somma puntate: ${sommaPuntate}; Guadagno: ${Math.round(guadagno* 100) / 100}; Percentuale guadagno: ${Math.floor(percGuadagno)}%`);
+        $('#result').text(`Somma puntate: ${formatMoney(sommaPuntate)}; Guadagno: ${formatMoney(guadagno)}; Percentuale guadagno: ${Math.floor(percGuadagno)}%`);
       });
     });
   </script>
