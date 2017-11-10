@@ -10,63 +10,78 @@
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+    integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <style>
     .container {
       max-width: 800px;
+    }
+    form {
+      width: 100%;
+    }
+    .title {
+      color: red;
     }
   </style>
 </head>
 
 <body>
   <header class="container">
-    <h1 class="text-center">Betty</h1>
+    <h1 class="text-center my-4 title">Betty</h1>
   </header>
   <main class="container">
     <form>
       <div class="row">
-        <div class="form-group col-xs-6">
+        <div class="form-group col-6">
           <label for="txt1">Quota 1</label>
           <input type="number" class="form-control quota" id="txt1" placeholder="0.00">
         </div>
-        <div class="form-group col-xs-6">
+        <div class="form-group col-3">
           <label for="txtPuntata1">Puntata 1</label>
           <input type="number" class="form-control" id="txtPuntata1" placeholder="0.00" disabled>
         </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-xs-6">
+        <div class="form-group col-3">
+            <label for="txtProbabilita1">Probabilità 1</label>
+            <input type="text" class="form-control" id="txtProbabilita1" placeholder="0.00" disabled>
+          </div>
+        <div class="form-group col-6">
           <label for="txtX">Quota X / X2</label>
           <input type="number" class="form-control quota" id="txtX" placeholder="0.00">
         </div>
-        <div class="form-group col-xs-6">
+        <div class="form-group col-3">
           <label for="txtPuntataX">Puntata X</label>
           <input type="number" class="form-control" id="txtPuntataX" placeholder="0.00" disabled>
         </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-xs-6">
+        <div class="form-group col-3">
+            <label for="txtProbabilitaX">Probabilità X</label>
+            <input type="text" class="form-control" id="txtProbabilitaX" placeholder="0.00" disabled>
+        </div>
+        <div class="form-group col-6">
           <label for="txt2">Quota 2</label>
           <input type="number" class="form-control quota" id="txt2" placeholder="0.00">
         </div>
-        <div class="form-group col-xs-6">
+        <div class="form-group col-3">
           <label for="txtPuntata2">Puntata 2</label>
           <input type="number" class="form-control" id="txtPuntata2" placeholder="0.00" disabled>
         </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-xs-12">
+        <div class="form-group col-3">
+            <label for="txtProbabilita2">Probabilità 2</label>
+            <input type="text" class="form-control" id="txtProbabilita2" placeholder="0.00" disabled>
+        </div>
+        <div class="form-group col-12">
           <label for="txtMargine">Margine in percentuale</label>
           <input type="number" class="form-control quota" id="txtMargine" placeholder="0.00">
         </div>
+        <div class="text-center" style="width:100%">
+            <button id="btnCalcola" type="submit" style="width:200px" class="btn btn-lg btn-primary">
+                Calcola
+            </button>
+        </div>
       </div>
-      <button id="btnCalcola" type="submit" style="width:200px" class="btn btn-lg btn-primary center-block">
-        Calcola
-      </button>
     </form>
+
     <div class="container" style="margin-top: 30px">
-      <div class="row text-center col-xs-12" id="result">
+      <div class="row text-center col-12" id="result">
       </div>
     </div>
   </main>
@@ -77,11 +92,35 @@
     $(document).ready(function () {
 
       var calcolaPuntata = function (quota, quotaMinore) {
-        if(quota === 0){
+        if (quota === 0) {
           return 0;
         }
 
         return formatMoney(quotaMinore / quota);
+      }
+
+      var invertiQuota = function (quota) {
+        return 1 / quota;
+      }
+
+      var calcolaProbabilta = function (quota1, quotaX, quota2) {
+          var quotaInvertita1 = invertiQuota(quota1);
+          var quotaInvertitaX = invertiQuota(quotaX);
+          var quotaInvertita2 = invertiQuota(quota2);
+
+          var sommaQuoteInvertite = quotaInvertita1 + quotaInvertitaX + quotaInvertita2;
+
+          var probabilita1 = formatMoney(quotaInvertita1 / sommaQuoteInvertite * 100);
+          var probabilitaX = formatMoney(quotaInvertitaX / sommaQuoteInvertite * 100);
+          var probabilita2 = formatMoney(quotaInvertita2 / sommaQuoteInvertite * 100);
+
+          console.log(`Probabilità 1: ${probabilita1}`);
+          console.log(`Probabilità X: ${probabilitaX}`);
+          console.log(`Probabilità 2: ${probabilita2}`);
+
+          $('#txtProbabilita1').val(`${probabilita1} %`);
+          $('#txtProbabilitaX').val(`${probabilitaX} %`);
+          $('#txtProbabilita2').val(`${probabilita2} %`);
       }
 
       var formatMoney = function (number) {
@@ -92,6 +131,10 @@
         $('#txtPuntata1').val('');
         $('#txtPuntataX').val('');
         $('#txtPuntata2').val('');
+
+        $('#txtProbabilita1').val('');
+        $('#txtProbabilitaX').val('');
+        $('#txtProbabilita2').val('');
 
         $('#btnCalcola').removeClass('btn-success');
         $('#btnCalcola').removeClass('btn-danger');
@@ -107,7 +150,7 @@
         var quotaX = parseFloat($('#txtX').val());
         var quota2 = parseFloat($('#txt2').val());
 
-        if(isNaN(quota2)) {
+        if (isNaN(quota2)) {
           quota2 = 0;
         }
 
@@ -121,12 +164,15 @@
           margine = 0;
         }
 
+        calcolaProbabilta(quota1, quotaX, quota2);
+
         var quote = [quota1, quotaX, quota2].reduce((previous, current) => {
-          if(current > 0) {
-              previous.push(current);
+          if (current > 0) {
+            previous.push(current);
           }
           return previous;
         }, []);
+        
         console.log(quote);
         var quotaMinore = Math.min(...quote);
         console.log(`quota minore: ${quotaMinore}`);
@@ -155,10 +201,12 @@
           $('#btnCalcola').removeClass('btn-primary');
           $('#btnCalcola').addClass('btn-danger');
         }
-        
+
         var guadagno = (quotaMinore - (sommaPuntate));
         var percGuadagno = guadagno * 100 / (puntata1 + puntataX + puntata2);
-        $('#result').text(`Somma puntate: ${formatMoney(sommaPuntate)}; Guadagno: ${formatMoney(guadagno)}; Percentuale guadagno: ${Math.floor(percGuadagno)}%`);
+        $('#result').text(
+          `Somma puntate: ${formatMoney(sommaPuntate)}; Guadagno: ${formatMoney(guadagno)}; Percentuale guadagno: ${Math.floor(percGuadagno)}%`
+        );
       });
     });
   </script>
