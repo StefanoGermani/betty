@@ -15,23 +15,6 @@ $(document).ready(function () {
         return 1 / quota;
     } 
 
-    var calcolaProbabilta = function (quota1, quotaX, quota2) {
-        var scommessa = new Scommessa(quota1, quotaX, quota2);
-        const probabilità = scommessa.calcolaProbabilta();
-
-        var probabilita1 = formatMoney(probabilità[0]);
-        var probabilitaX = formatMoney(probabilità[1]);
-        var probabilita2 = formatMoney(probabilità[2]);
-
-        console.log(`Probabilità 1: ${probabilita1}`);
-        console.log(`Probabilità X: ${probabilitaX}`);
-        console.log(`Probabilità 2: ${probabilita2}`);
-
-        $('#txtProbabilita1').val(`${probabilita1} %`);
-        $('#txtProbabilitaX').val(`${probabilitaX} %`);
-        $('#txtProbabilita2').val(`${probabilita2} %`);
-    }
-
     var formatMoney = function (number) {
         return Math.round(number * 100) / 100;
     }
@@ -63,47 +46,33 @@ $(document).ready(function () {
             quota2 = 0;
         }
 
+        var scommessa = new Scommessa(quota1, quotaX, quota2)
+
         console.log(`quota1: ${quota1}`);
         console.log(`quotaX: ${quotaX}`);
         console.log(`quota2: ${quota2}`);
 
-        var margine = parseFloat($('#txtMargine').val());
+        const probabilità = scommessa.calcolaProbabilta();
 
-        if (isNaN(margine)) {
-            margine = 0;
-        }
+        console.log(`Probabilità 1: ${probabilità[0]}`);
+        console.log(`Probabilità X: ${probabilità[1]}`);
+        console.log(`Probabilità 2: ${probabilità[2]}`);
 
-        calcolaProbabilta(quota1, quotaX, quota2);
+        $('#txtProbabilita1').val(`${probabilità[0]} %`);
+        $('#txtProbabilitaX').val(`${probabilità[1]} %`);
+        $('#txtProbabilita2').val(`${probabilità[2]} %`);
 
-        var quote = [quota1, quotaX, quota2].reduce((previous, current) => {
-            if (current > 0) {
-                previous.push(current);
-            }
-            return previous;
-        }, []);
+        const puntate = scommessa.calcolaPuntate();
 
-        console.log(quote);
-        var quotaMinore = Math.min(...quote);
-        console.log(`quota minore: ${quotaMinore}`);
+        console.log(`puntata1: ${puntate[0]}`);
+        console.log(`puntataX: ${puntate[1]}`);
+        console.log(`puntata2: ${puntate[2]}`);
 
-        var puntata1 = calcolaPuntata(quota1, quotaMinore);
-        var puntataX = calcolaPuntata(quotaX, quotaMinore);
-        var puntata2 = calcolaPuntata(quota2, quotaMinore);
+        $('#txtPuntata1').val(puntate[0]);
+        $('#txtPuntataX').val(puntate[1]);
+        $('#txtPuntata2').val(puntate[2]);
 
-        console.log(`puntata1: ${puntata1}`);
-        console.log(`puntataX: ${puntataX}`);
-        console.log(`puntata2: ${puntata2}`);
-
-        $('#txtPuntata1').val(puntata1);
-        $('#txtPuntataX').val(puntataX);
-        $('#txtPuntata2').val(puntata2);
-
-        const sommaPuntate = puntata1 + puntataX + puntata2;
-        console.log(`somma puntate: ${sommaPuntate}`);
-        console.log(`margine: ${margine}`)
-        console.log(`quota con margine: ${quotaMinore + (quotaMinore * margine / 100)}`);
-
-        if ((sommaPuntate) <= (quotaMinore + (quotaMinore * margine / 100))) {
+        if (scommessa.isGuagagno()) {
             $('#btnCalcola').removeClass('btn-primary');
             $('#btnCalcola').addClass('btn-success');
         } else {
@@ -111,10 +80,9 @@ $(document).ready(function () {
             $('#btnCalcola').addClass('btn-danger');
         }
 
-        var guadagno = (quotaMinore - (sommaPuntate));
-        var percGuadagno = guadagno * 100 / (puntata1 + puntataX + puntata2);
+        var percGuadagno = scommessa.calcolaPercentualeGuadagno();
         $('#result').text(
-            `Somma puntate: ${formatMoney(sommaPuntate)}; Guadagno: ${formatMoney(guadagno)}; Percentuale guadagno: ${Math.floor(percGuadagno)}%`
+            `Somma puntate: ${formatMoney(scommessa.sommaPuntate)}; Percentuale guadagno: ${percGuadagno}%`
         );
     });
 });
