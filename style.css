@@ -1,0 +1,12 @@
+.container {
+    max-width: 800px;
+}
+
+form {
+    width: 100%;
+}
+
+.title {
+    color: #28a745;
+    text-transform: uppercase;
+}
