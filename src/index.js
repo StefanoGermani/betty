@@ -1,3 +1,6 @@
+import Scommessa from './scommessa';
+
+
 $(document).ready(function () {
 
     var calcolaPuntata = function (quota, quotaMinore) {
@@ -10,18 +13,15 @@ $(document).ready(function () {
 
     var invertiQuota = function (quota) {
         return 1 / quota;
-    }
+    } 
 
     var calcolaProbabilta = function (quota1, quotaX, quota2) {
-        var quotaInvertita1 = invertiQuota(quota1);
-        var quotaInvertitaX = invertiQuota(quotaX);
-        var quotaInvertita2 = invertiQuota(quota2);
+        var scommessa = new Scommessa(quota1, quotaX, quota2);
+        const probabilità = scommessa.calcolaProbabilta();
 
-        var sommaQuoteInvertite = quotaInvertita1 + quotaInvertitaX + quotaInvertita2;
-
-        var probabilita1 = formatMoney(quotaInvertita1 / sommaQuoteInvertite * 100);
-        var probabilitaX = formatMoney(quotaInvertitaX / sommaQuoteInvertite * 100);
-        var probabilita2 = formatMoney(quotaInvertita2 / sommaQuoteInvertite * 100);
+        var probabilita1 = formatMoney(probabilità[0]);
+        var probabilitaX = formatMoney(probabilità[1]);
+        var probabilita2 = formatMoney(probabilità[2]);
 
         console.log(`Probabilità 1: ${probabilita1}`);
         console.log(`Probabilità X: ${probabilitaX}`);
