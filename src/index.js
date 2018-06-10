@@ -3,22 +3,6 @@ import Scommessa from './scommessa';
 
 $(document).ready(function () {
 
-    var calcolaPuntata = function (quota, quotaMinore) {
-        if (quota === 0) {
-            return 0;
-        }
-
-        return formatMoney(quotaMinore / quota);
-    }
-
-    var invertiQuota = function (quota) {
-        return 1 / quota;
-    } 
-
-    var formatMoney = function (number) {
-        return Math.round(number * 100) / 100;
-    }
-
     $('.quota').on('input', function () {
         $('#txtPuntata1').val('');
         $('#txtPuntataX').val('');
@@ -82,7 +66,7 @@ $(document).ready(function () {
 
         var percGuadagno = scommessa.calcolaPercentualeGuadagno();
         $('#result').text(
-            `Somma puntate: ${formatMoney(scommessa.sommaPuntate)}; Percentuale guadagno: ${percGuadagno}%`
+            `Somma puntate: ${scommessa.sommaPuntate}; Percentuale guadagno: ${percGuadagno}%`
         );
     });
 });
