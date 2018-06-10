@@ -1,0 +1,3 @@
+- scegliere quanto puntare e moltiplicare per puntate (moltiplicatore = puntataDesiderata / puntata; puntataEffettiva = puntata * moltiplicatore)
+- fix - calcolare probabilità quando solo due quote
+- possibilità di avere N quote
