@@ -8,6 +8,9 @@ module.exports = {
     filename: 'bundle.js'
   },
   devServer: {
-    contentBase: './'
+    open: true,
+    contentBase: './',
+    index: 'index.htm'
   },
+  devtool: "source-map",
 };

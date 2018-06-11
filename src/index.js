@@ -19,6 +19,16 @@ $(document).ready(function () {
         $('#result').text('');
     });
 
+    $('.puntata').on('input', function () {
+        $('.puntata').not($(this)).val('');
+
+        $('#btnCalcola').removeClass('btn-success');
+        $('#btnCalcola').removeClass('btn-danger');
+        $('#btnCalcola').addClass('btn-primary');
+
+        $('#result').text('');
+    });
+
     $('#btnCalcola').click(function (event) {
         event.preventDefault();
 
