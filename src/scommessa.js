@@ -1,6 +1,7 @@
 class Scommesse {
-    constructor(...quote) {
-        this.quote = quote || [];
+    constructor(...dati) {
+        this.dati = dati || [];
+        this.quote = this.dati.map(d => d.quota);
         this.quoteInvertite = this.quote.map(x => this._invertiQuota(x));
     }
 
@@ -43,6 +44,8 @@ class Scommesse {
     }
 
     _invertiQuota(quota) {
+        if(quota === 0) return 0;
+
         return 1 / quota;
     }
 

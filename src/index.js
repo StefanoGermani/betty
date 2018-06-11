@@ -40,7 +40,7 @@ $(document).ready(function () {
             quota2 = 0;
         }
 
-        var scommessa = new Scommessa(quota1, quotaX, quota2)
+        var scommessa = new Scommessa({ quota: quota1 }, { quota: quotaX }, {quota: quota2 });
 
         console.log(`quota1: ${quota1}`);
         console.log(`quotaX: ${quotaX}`);
