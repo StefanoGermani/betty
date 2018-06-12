@@ -24,13 +24,22 @@ class Scommesse {
 
     calcolaPuntate() {
         const quotaMinore = this._trovaQuotaMinore();
-        return this.quote.map((quota) => this._arrotonda(quota / quotaMinore));
+        const puntataDesiderataIndex = this.dati.map(d => d.puntata).findIndex(x => !isNaN(x) && x !== 0);
+        const puntate = this.quote.map((quota) => this._arrotonda(quota / quotaMinore));
+
+        if(puntataDesiderataIndex !== -1) {
+            const moltiplicatore = this.dati[puntataDesiderataIndex].puntata / puntate[puntataDesiderataIndex];
+            return puntate.map(puntata => this._arrotonda(puntata * moltiplicatore));
+        }
+
+        return puntate;
     }
 
     calcolaPercentualeGuadagno() {
-        const quotaMinore = this._trovaQuotaMinore();        
-        var guadagno = quotaMinore - this.sommaPuntate;
-        return this._arrotonda(guadagno * 100 / this.sommaPuntate);
+        const quotaMinore = this._trovaQuotaMinore();     
+        const sommaPuntate = this.quote.map((quota) => this._arrotonda(quota / quotaMinore)).reduce((previous, current) => previous + current, 0);
+        var guadagno = quotaMinore - sommaPuntate;
+        return this._arrotonda(guadagno * 100 / sommaPuntate);
     }
 
     _trovaQuotaMinore() {

@@ -33,34 +33,36 @@ $(document).ready(function () {
         event.preventDefault();
 
         var quota1 = parseFloat($('#txt1').val());
-        var quotaX = parseFloat($('#txtX').val());
-        var quota2 = parseFloat($('#txt2').val());
+        var quota2 = parseFloat($('#txtX').val());
+        var quota3 = parseFloat($('#txt2').val());
 
-        if (isNaN(quota2)) {
-            quota2 = 0;
+        var puntata1 = parseFloat($('#txtPuntata1').val());
+        var puntata2 = parseFloat($('#txtPuntataX').val());
+        var puntata3 = parseFloat($('#txtPuntata2').val());
+
+        if (isNaN(quota3)) {
+            quota3 = 0;
         }
 
-        var scommessa = new Scommessa({ quota: quota1 }, { quota: quotaX }, {quota: quota2 });
+        var scommessa = new Scommessa({
+            quota: quota1,
+            puntata: puntata1,
+        }, {
+            quota: quota2,
+            puntata: puntata2,
 
-        console.log(`quota1: ${quota1}`);
-        console.log(`quotaX: ${quotaX}`);
-        console.log(`quota2: ${quota2}`);
+        }, {
+            quota: quota3,
+            puntata: puntata3,
+        });
 
         const probabilità = scommessa.calcolaProbabilta();
-
-        console.log(`Probabilità 1: ${probabilità[0]}`);
-        console.log(`Probabilità X: ${probabilità[1]}`);
-        console.log(`Probabilità 2: ${probabilità[2]}`);
 
         $('#txtProbabilita1').val(`${probabilità[0]} %`);
         $('#txtProbabilitaX').val(`${probabilità[1]} %`);
         $('#txtProbabilita2').val(`${probabilità[2]} %`);
 
         const puntate = scommessa.calcolaPuntate();
-
-        console.log(`puntata1: ${puntate[0]}`);
-        console.log(`puntataX: ${puntate[1]}`);
-        console.log(`puntata2: ${puntate[2]}`);
 
         $('#txtPuntata1').val(puntate[0]);
         $('#txtPuntataX').val(puntate[1]);
@@ -76,7 +78,7 @@ $(document).ready(function () {
 
         var percGuadagno = scommessa.calcolaPercentualeGuadagno();
         $('#result').text(
-            `Somma puntate: ${scommessa.sommaPuntate}; Percentuale guadagno: ${percGuadagno}%`
+            `Somma puntate: ${scommessa.sommaPuntate} €; Percentuale guadagno: ${percGuadagno}%`
         );
     });
 });
