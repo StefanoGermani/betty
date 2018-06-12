@@ -1,7 +1,12 @@
 class Scommesse {
     constructor(...dati) {
         this.dati = dati || [];
-        this.quote = this.dati.map(d => d.quota);
+        this.quote = this.dati.map(d => d.quota).reduce((previous, current) => {
+            if (current > 0) {
+                previous.push(current);
+            }
+            return previous;
+        }, []);;
         this.quoteInvertite = this.quote.map(x => this._invertiQuota(x));
     }
 
@@ -15,7 +20,7 @@ class Scommesse {
 
     isGuagagno() {
         const quotaMinore = this._trovaQuotaMinore();
-        return this.sommaPuntate <= (quotaMinore + (quotaMinore / 100))
+        return this.sommaPuntate <= quotaMinore;
     }
 
     calcolaProbabilta() {
@@ -25,7 +30,7 @@ class Scommesse {
     calcolaPuntate() {
         const quotaMinore = this._trovaQuotaMinore();
         const puntataDesiderataIndex = this.dati.map(d => d.puntata).findIndex(x => !isNaN(x) && x !== 0);
-        const puntate = this.quote.map((quota) => this._arrotonda(quota / quotaMinore));
+        const puntate = this.quote.map((quota) => this._arrotonda(quotaMinore / quota));
 
         if(puntataDesiderataIndex !== -1) {
             const moltiplicatore = this.dati[puntataDesiderataIndex].puntata / puntate[puntataDesiderataIndex];
@@ -37,19 +42,13 @@ class Scommesse {
 
     calcolaPercentualeGuadagno() {
         const quotaMinore = this._trovaQuotaMinore();     
-        const sommaPuntate = this.quote.map((quota) => this._arrotonda(quota / quotaMinore)).reduce((previous, current) => previous + current, 0);
+        const sommaPuntate = this.quote.map((quota) => this._arrotonda(quotaMinore/quota)).reduce((previous, current) => previous + current, 0);
         var guadagno = quotaMinore - sommaPuntate;
         return this._arrotonda(guadagno * 100 / sommaPuntate);
     }
 
     _trovaQuotaMinore() {
-        const quoteTemp = this.quote.reduce((previous, current) => {
-            if (current > 0) {
-                previous.push(current);
-            }
-            return previous;
-        }, []);
-        return Math.min(...quoteTemp);
+        return Math.min(...this.quote);
     }
 
     _invertiQuota(quota) {
