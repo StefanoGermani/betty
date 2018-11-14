@@ -19,8 +19,8 @@ class Scommesse {
     }
 
     isGuagagno() {
-        const quotaMinore = this._trovaQuotaMinore();
-        return this.sommaPuntate <= quotaMinore;
+        const puntate = this.calcolaPuntate();
+        return this.sommaPuntate <= this.quote[0] * puntate[0]; 
     }
 
     calcolaProbabilta() {
