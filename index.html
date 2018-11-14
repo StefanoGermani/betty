@@ -20,53 +20,72 @@
     <h1 class="text-center my-4 title">Betty</h1>
   </header>
   <main class="container">
-    <form id="bettyForm">
-      <div class="row">
-        <div class="form-group col-6">
-          <label for="txt1">Quota 1</label>
-          <input type="number" step="0.01" class="form-control quota" id="txt1" placeholder="0.00" required>
+    <div id="scommesse">
+      <form id="bettyForm">
+        <div class="row">
+          <div class="form-group col-6">
+            <label for="txt1">Quota 1</label>
+            <input type="number" step="0.01" class="form-control quota" id="txt1" placeholder="0.00"
+              required>
+          </div>
+          <div class="form-group col-3">
+            <label for="txtPuntata1">Puntata 1</label>
+            <input type="number" step="0.01" class="form-control puntata" id="txtPuntata1"
+              placeholder="0.00">
+          </div>
+          <div class="form-group col-3">
+            <label for="txtProbabilita1">Probabilità 1</label>
+            <input type="text" class="form-control" id="txtProbabilita1" placeholder="0.00"
+              disabled>
+          </div>
+          <div class="form-group col-6">
+            <label for="txtX">Quota 2</label>
+            <input type="number" step="0.01" class="form-control quota" id="txtX" placeholder="0.00"
+              required>
+          </div>
+          <div class="form-group col-3">
+            <label for="txtPuntataX">Puntata 2</label>
+            <input type="number" step="0.01" class="form-control puntata" id="txtPuntataX"
+              placeholder="0.00">
+          </div>
+          <div class="form-group col-3">
+            <label for="txtProbabilitaX">Probabilità 2</label>
+            <input type="text" class="form-control" id="txtProbabilitaX" placeholder="0.00"
+              disabled>
+          </div>
+          <div class="form-group col-6">
+            <label for="txt2">Quota 3</label>
+            <input type="number" step="0.01" class="form-control quota" id="txt2" placeholder="0.00">
+          </div>
+          <div class="form-group col-3">
+            <label for="txtPuntata2">Puntata 3</label>
+            <input type="number" step="0.01" class="form-control puntata" id="txtPuntata2"
+              placeholder="0.00">
+          </div>
+          <div class="form-group col-3">
+            <label for="txtProbabilita2">Probabilità 3</label>
+            <input type="text" class="form-control" id="txtProbabilita2" placeholder="0.00"
+              disabled>
+          </div>
+          <div class="text-center" style="width:100%">
+            <button id="btnCalcola" type="submit" style="width:200px" class="btn btn-lg btn-primary">
+              Calcola
+            </button>
+          </div>
         </div>
-        <div class="form-group col-3">
-          <label for="txtPuntata1">Puntata 1</label>
-          <input type="number" step="0.01" class="form-control puntata" id="txtPuntata1" placeholder="0.00">
-        </div>
-        <div class="form-group col-3">
-          <label for="txtProbabilita1">Probabilità 1</label>
-          <input type="text" class="form-control" id="txtProbabilita1" placeholder="0.00" disabled>
-        </div>
-        <div class="form-group col-6">
-          <label for="txtX">Quota 2</label>
-          <input type="number" step="0.01" class="form-control quota" id="txtX" placeholder="0.00" required>
-        </div>
-        <div class="form-group col-3">
-          <label for="txtPuntataX">Puntata 2</label>
-          <input type="number" step="0.01" class="form-control puntata" id="txtPuntataX" placeholder="0.00">
-        </div>
-        <div class="form-group col-3">
-          <label for="txtProbabilitaX">Probabilità 2</label>
-          <input type="text" class="form-control" id="txtProbabilitaX" placeholder="0.00" disabled>
-        </div>
-        <div class="form-group col-6">
-          <label for="txt2">Quota 3</label>
-          <input type="number" step="0.01" class="form-control quota" id="txt2" placeholder="0.00">
-        </div>
-        <div class="form-group col-3">
-          <label for="txtPuntata2">Puntata 3</label>
-          <input type="number" step="0.01" class="form-control puntata" id="txtPuntata2" placeholder="0.00">
-        </div>
-        <div class="form-group col-3">
-          <label for="txtProbabilita2">Probabilità 3</label>
-          <input type="text" class="form-control" id="txtProbabilita2" placeholder="0.00" disabled>
-        </div>
-        <div class="text-center" style="width:100%">
-          <button id="btnCalcola" type="submit" style="width:200px" class="btn btn-lg btn-primary">
-            Calcola
-          </button>
-        </div>
-      </div>
-    </form>
+      </form>
 
-    <div class="d-block mt-5 text-center w-100" id="result">
+      <div class="d-block mt-5 text-center w-100" id="result">
+      </div>
+    </div>
+    <div id="setteEMezzo" class="row mt-5">
+      <form id="formSetteEMezzo" class="form-inline w-100">
+        <div class="form-group mr-2">
+          <label for="carta" class="sr-only">Carta</label>
+          <input type="number" class="form-control" id="txtCarta" value="7" required>
+        </div>
+        <button id="btnSetteEMezzo" type="submit" class="btn btn-primary mr-2">Calcola</button>
+      </form>
     </div>
   </main>
 

@@ -1,4 +1,4 @@
-import Scommessa from './scommessa';
+import Scommessa from './business/scommessa';
 
 
 $('.quota').on('input', function () {

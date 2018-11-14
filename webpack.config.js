@@ -10,7 +10,9 @@ module.exports = {
   devServer: {
     open: true,
     contentBase: './',
-    index: 'index.htm'
+    index: 'index.htm',
+    watchContentBase: true,
+    publicPath: '/assets/js/'
   },
   devtool: "source-map",
 };
