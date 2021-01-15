@@ -75,7 +75,8 @@ $('#bettyForm').submit(function (event) {
     }
 
     var percGuadagno = scommessa.calcolaPercentualeGuadagno();
+
     $('#result').text(
-        `Somma puntate: ${scommessa.sommaPuntate} €; Percentuale guadagno: ${percGuadagno}%`
+        `Somma puntate: ${scommessa.sommaPuntate} €; Percentuale guadagno: ${percGuadagno}%; Guadagno: ${scommessa._arrotonda(scommessa.sommaPuntate*percGuadagno/100)} €`
     );
 });

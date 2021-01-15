@@ -43,7 +43,7 @@ class Scommesse {
     calcolaPercentualeGuadagno() {
         const quotaMinore = this._trovaQuotaMinore();     
         const sommaPuntate = this.quote.map((quota) => this._arrotonda(quotaMinore/quota)).reduce((previous, current) => previous + current, 0);
-        var guadagno = quotaMinore - sommaPuntate;
+        const guadagno = quotaMinore - sommaPuntate;
         return this._arrotonda(guadagno * 100 / sommaPuntate);
     }
 
